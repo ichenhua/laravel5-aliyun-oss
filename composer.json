@@ -1,0 +1,22 @@
+{
+    "name": "chenhua/laravel5-aliyun-oss",
+    "description": "Aliyun OSS Package for Laravel 5",
+    "keywords": ["laravel", "chenhua", "aliyun", "oss"],
+    "homepage": "http://www.81f7.com",
+    "authors": [
+        {
+            "name": "chenhua",
+            "email": "276004561@qq.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "require": {
+        "aliyuncs/oss-sdk-php": "~2.0"
+    },
+    "autoload": {
+        "psr-4":{
+            "Chenhua\\AliyunOss\\": "src"
+        }
+    }
+}
