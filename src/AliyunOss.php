@@ -44,7 +44,7 @@ class AliyunOss
     //生成随机文件名
     private static function createRandFileName($url, $prefix='')
     {
-        $file_name = date('Ymd-His').'-'.rand(100,900).'.'.pathinfo($url, PATHINFO_EXTENSION);
+        $file_name = date('Ymd-His').'-'.rand(100,900).'.'.strtolower(pathinfo($url, PATHINFO_EXTENSION));
         if($prefix){
             $file_name = $prefix.$file_name;
         }
