@@ -28,12 +28,10 @@ class AliyunOss
             $file_name = self::createRandFileName($url,$prefix);
         }
         $result = self::$ossClient->putObject($bucket, $file_name, $file );
-        return[
+
+        return $result + [
             'bucket' => $bucket,
-            'file_name' => $file_name,
-            'full_name' => $result['oss-request-url'],
-            'hash' => $result['x-oss-hash-crc64ecma'],
-            'md5' => $result['content-md5'],
+            'file_name' => $file_name
         ];
     }
 
@@ -48,7 +46,7 @@ class AliyunOss
     {
         $file_name = date('Ymd-His').'-'.rand(100,900).'.'.pathinfo($url, PATHINFO_EXTENSION);
         if($prefix){
-            $file_name = $prefix.'/'.$file_name;
+            $file_name = $prefix.$file_name;
         }
         return $file_name;
     }
