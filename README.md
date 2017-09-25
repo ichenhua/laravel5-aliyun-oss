@@ -15,7 +15,8 @@ Laravel5-Aliyun-Oss 是阿里云 OSS 官方 SDK 的 Composer 封装，支持 Lar
 
 ## 更新记录
 
-* 2017-09-20 `Release v1.0` 引入aliyunOss2.0，封装根据 url 上传文件方法。
+* 2017-09-25 `Release v1.0.1` 文件后缀转小写，添加组件使用demo
+* 2017-09-20 `Release v1.0.0` 引入aliyunOss2.0，封装根据 url 上传文件方法。
 
 ## 安装流程
 
@@ -100,7 +101,6 @@ $file_name = 'logo.png';
 
 //获取已有文件信息
 $getFile = AliyunOss::getObjectMeta($bucket, $file_name);
-
 
 //AliyunOss::getObjectMeta($bucket, $file_name);
 //实际调用的是 `OSS/OssClient.php` 中的：
