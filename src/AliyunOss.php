@@ -22,7 +22,7 @@ class AliyunOss
     //从url地址上传图片
     public static function uploadFileByUrl($url, $bucket, $prefix='')
     {
-        $file = file_get_contents($url);
+        $file = self::getContentByCurl($url);
         $file_name = self::createRandFileName($url,$prefix);
         if(self::fileIsExist($bucket, $file_name)){
             $file_name = self::createRandFileName($url,$prefix);
@@ -50,6 +50,35 @@ class AliyunOss
             $file_name = $prefix.$file_name;
         }
         return $file_name;
+    }
+
+    //curl方式获取文件内容
+    private static function getContentByCurl($url,$isHttps=false){
+        $header = array('Expect:');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+        if($isHttps){
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); // 从证书中检查SSL加密算法是否存在
+        }
+
+        $ret = curl_exec($ch);
+
+        if(curl_errno($ch)){
+            \Log::error('Curl error: '.curl_error($ch));
+        }
+
+        curl_close ($ch);
+        //$return_code = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+        return $ret;
     }
 
     public function __call($method, $args)
