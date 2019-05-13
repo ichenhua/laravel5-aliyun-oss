@@ -27,7 +27,9 @@ class AliyunOss
         if(self::fileIsExist($bucket, $file_name)){
             $file_name = self::createRandFileName($url,$prefix);
         }
-        $result = self::$ossClient->putObject($bucket, $file_name, $file );
+		
+        $options[OssClient::OSS_HEADERS] = ['X_BUCKET_HEADER' => $bucket];
+        $result = self::$ossClient->putObject($bucket, $file_name, $file, $options);
 
         return $result + [
             'bucket' => $bucket,
